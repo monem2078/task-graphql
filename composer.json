@@ -9,9 +9,7 @@
     "license": "MIT",
     "require": {
         "php": "^7.2",
-        "barryvdh/laravel-cors": "^1.0",
         "fideloper/proxy": "^4.0",
-        "fruitcake/laravel-cors": "^1.0",
         "joselfonseca/lighthouse-graphql-passport-auth": "^3.0",
         "laravel/framework": "^6.2",
         "laravel/passport": "^8.2",
