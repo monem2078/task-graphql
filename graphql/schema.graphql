@@ -1,0 +1,44 @@
+"A datetime string with format `Y-m-d H:i:s`, e.g. `2018-01-01 13:00:00`."
+scalar DateTime @scalar(class: "Nuwave\\Lighthouse\\Schema\\Types\\Scalars\\DateTime")
+"A date string with format `Y-m-d`, e.g. `2011-05-23`."
+scalar Date @scalar(class: "Nuwave\\Lighthouse\\Schema\\Types\\Scalars\\Date")
+
+type Query {
+    getBuyers: [User]! @all
+    user(id: ID @eq): User @find(model: "App\\User")
+
+    getProducts: [Product] @all
+
+    getOrders: [Order] @all
+    getOrder(order_id: ID @eq): Order
+}
+
+type User {
+    buyerID: String! @rename(attribute: "id")
+    buyerName: String! @rename(attribute: "name")
+    buyerAuthoken: String @rename(attribute: "access_token")
+}
+
+type Product {
+    productID: ID! @rename(attribute: "id")
+    productName: String! @rename(attribute: "name")
+}
+
+type Order {
+    orderID: ID! @rename(attribute: "id")
+    buyer: User! @rename(attribute: "user")
+    product: Product! @belongsTo
+    timeStamp: DateTime @rename(attribute: "created_at")
+}
+
+
+type Mutation {
+    createBuyer(buyerName: String! @rules(apply: ["required"])): User!
+    createProduct(productName: String! @rules(apply: ["required"])): Product!
+    createOrder(
+        buyerID: ID! @rules(apply: ["required"]),
+        productID: ID! @rules(apply: ["required"])
+    ): Order!
+    getOrdersByUser(user_id: ID! @eq) :[Order] @all
+}
+
